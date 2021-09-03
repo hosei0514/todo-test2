@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Todo;
 use Brian2694\Toastr\Facades\Toastr;
 
 class TodoController extends Controller
@@ -14,7 +15,6 @@ class TodoController extends Controller
      */
     public function index()
     {
-        // 期限が近いものから順に表示する、期限がないものは最後に持っていく
         $todos = Todo::orderByRaw('`deadline` IS NULL ASC')->orderBy('deadline')->get();
 
         return view('todos.index', [
@@ -31,8 +31,7 @@ class TodoController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'newTodo'     => 'required|max:100',
-            'newDeadline' => 'nullable|after:"now"',
+            'newTodo'     => 'required|max:20',
         ]);
 
         // DBに保存
@@ -40,11 +39,7 @@ class TodoController extends Controller
             'todo'     => $request->newTodo,
             'deadline' => $request->newDeadline,
         ]);
-
-        // フラッシュメッセージ
-        Toastr::success('新しいタスクが追加されました！');
-
-        return redirect()->route('todos.index');
+        return redirect('/todo/create');
     }
 
     /**
@@ -81,11 +76,8 @@ class TodoController extends Controller
         $todo->deadline = $request->updateDeadline;
 
         $todo->save();
+        return redirect('/todo/update');
 
-        // フラッシュメッセージ
-        Toastr::success('タスクが変更されました！');
-
-        return redirect()->route('todos.index');
     }
 
     /**
@@ -99,10 +91,6 @@ class TodoController extends Controller
         $todo = Todo::find($id);
 
         $todo->delete();
-
-        // フラッシュメッセージ
-        Toastr::success('タスクが削除されました！');
-
-        return redirect()->route('todos.index');
+        return redirect('/todo/delete');
     }
 }
