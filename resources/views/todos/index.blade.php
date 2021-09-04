@@ -22,7 +22,6 @@
             {{ csrf_field() }}
                 <div class="row">
                     {{ Form::text('newTodo', null, ['class' => 'form-control col-8 mr-5']) }}
-                    {{ Form::date('newDeadline', null, ['class' => 'mr-5']) }}
                     {{ Form::submit('追加', ['class' => 'btn btn-primary']) }}
                 </div>
             {!! Form::close() !!}
@@ -43,9 +42,14 @@
             <tbody>
                 @foreach ($todos as $todo)
                     <tr>
-                        <th scope="row" class="todo">{{ $todo->todo }}</th>
-                        <td>{{ $todo->deadline }}</td>
-                        <td><a href="{{ route('todos.edit', $todo->id) }}" class="btn btn-primary">更新</a></td>
+                        <td>
+                        {{ Form::text('updateTodo', $todo->todo, ['class' => 'form-control col-7 mr-4']) }}
+                        </td>
+                        <td>{{ $todo->created_at }}</td>
+                        {!! Form::open(['route' => ['todos.update', $todo->id], 'method' => 'POST']) !!}
+                        {{ csrf_field() }}
+                        {{ method_field('PUT') }}
+                        <td><a href="{{ route('todos.index', $todo->id) }}" class="btn btn-primary">更新</a></td>
                         {!! Form::open(['route' => ['todos.destroy', $todo->id], 'method' => 'POST']) !!}
                         {{ csrf_field() }}
                         {{ method_field('DELETE') }}
@@ -56,10 +60,8 @@
             </tbody>
         </table>
     </div>
+    </div>
 
     <script src="http://cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
-    <script src="http://cdn.bootcss.com/toastr.js/latest/js/toastr.min.js"></script>
-    {!! Toastr::message() !!}
-    </div>
 </body>
 </html>
