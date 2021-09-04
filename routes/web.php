@@ -13,7 +13,3 @@ use Illuminate\Support\Facades\Route;
 |
 */
 Route::resource('/todos', 'TodoController');
-Route::get('/', [ContactController::class, 'index']);
-Route::post('todo/create', [ContactController::class, 'store']);
-Route::post('todo/update', [ContactController::class, 'update']);
-Route::post('todo/delete', [ContactController::class, 'destroy']);
