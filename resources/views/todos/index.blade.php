@@ -6,11 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Todo List</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
-    <link rel="stylesheet" href="http://cdn.bootcss.com/toastr.js/latest/css/toastr.min.css">
-    <style type="text/css">
-    html { background-color:darkslateblue; }
-    </style>
-
+    <link rel="stylesheet" href="{{ asset('css/index.css')}}">
 </head>
 <body>
     <div class=todo>
