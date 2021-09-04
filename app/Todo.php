@@ -8,6 +8,7 @@ class Todo extends Model
 {
     protected $fillable = [
         'todo',
-        'deadline',
+        'created.at',
+        'updated.at',
     ];
 }
