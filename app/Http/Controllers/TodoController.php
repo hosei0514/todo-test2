@@ -44,11 +44,11 @@ class TodoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Request $request)
     {
-        $todo = Todo::find($id);
-        return view('todos.edit', [
-            'todo' => $todo,
+        $todos = Todo::get();
+        return view('todos.index', [
+            'todos' => $todos,
         ]);
     }
 
