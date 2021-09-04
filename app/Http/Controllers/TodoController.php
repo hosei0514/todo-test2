@@ -32,12 +32,10 @@ class TodoController extends Controller
         $request->validate([
             'newTodo'     => 'required|max:20',
         ]);
-        // DBに保存
-        Todo::create([
-            'todo'     => $request->newTodo,
-            'deadline' => $request->newDeadline,
+        $todos = Todo::get();
+        return view('todos.index', [
+            'todos' => $todos,
         ]);
-        return redirect('todo/create');
     }
 
     /**
@@ -61,19 +59,12 @@ class TodoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        $request->validate([
-            'updateTodo'     => 'required|max:100',
-            'updateDeadline' => 'nullable|after:"now"',
-        ]);
-
         $todo = Todo::find($id);
-
-        $todo->todo     = $request->updateTodo;
-        $todo->deadline = $request->updateDeadline;
-
-        $todo->save();
+        return view('todos.edit', [
+            'todo' => $todo,
+        ]);
         return redirect('/todo/update');
 
     }
@@ -84,11 +75,11 @@ class TodoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
-        $todo = Todo::find($id);
-
-        $todo->delete();
-        return redirect('/todo/delete');
+        $todos = Todo::get();
+        return view('todos.index', [
+            'todos' => $todos,
+        ]);
     }
 }
