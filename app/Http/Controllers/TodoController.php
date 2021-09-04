@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Todo;
-use Brian2694\Toastr\Facades\Toastr;
 
 class TodoController extends Controller
 {
@@ -15,7 +14,7 @@ class TodoController extends Controller
      */
     public function index()
     {
-        $todos = Todo::orderByRaw('`deadline` IS NULL ASC')->orderBy('deadline')->get();
+        $todos = Todo::get();
 
         return view('todos.index', [
             'todos' => $todos,
@@ -33,13 +32,12 @@ class TodoController extends Controller
         $request->validate([
             'newTodo'     => 'required|max:20',
         ]);
-
         // DBに保存
         Todo::create([
             'todo'     => $request->newTodo,
             'deadline' => $request->newDeadline,
         ]);
-        return redirect('/todo/create');
+        return redirect('todo/create');
     }
 
     /**
