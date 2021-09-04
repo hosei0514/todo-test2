@@ -50,7 +50,6 @@ class TodoController extends Controller
     public function edit($id)
     {
         $todo = Todo::find($id);
-        return redirect()->route('todos.index');
     }
 
     /**
@@ -69,7 +68,6 @@ class TodoController extends Controller
         $todo = Todo::find($id);
 
         $todo->todo     = $request->updateTodo;
-        $todo->deadline = $request->updateDeadline;
 
         $todo->save();
 
