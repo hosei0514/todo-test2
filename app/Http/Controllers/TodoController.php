@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Todo;
+use Brian2694\Toastr\Facades\Toastr;
 
 class TodoController extends Controller
 {
@@ -14,7 +15,7 @@ class TodoController extends Controller
      */
     public function index()
     {
-        $todos = Todo::get();
+        $todos = Todo::orderByRaw('`deadline` IS NULL ASC')->get();
 
         return view('todos.index', [
             'todos' => $todos,
@@ -32,10 +33,12 @@ class TodoController extends Controller
         $request->validate([
             'newTodo'     => 'required|max:20',
         ]);
-        $todos = Todo::get();
-        return view('todos.index', [
-            'todos' => $todos,
+
+        Todo::create([
+            'todo'     => $request->newTodo,
         ]);
+
+        return redirect()->route('todos.index');
     }
 
     /**
@@ -44,12 +47,10 @@ class TodoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Request $request)
+    public function edit($id)
     {
-        $todos = Todo::get();
-        return view('todos.index', [
-            'todos' => $todos,
-        ]);
+        $todo = Todo::find($id);
+        return redirect()->route('todos.index');
     }
 
     /**
@@ -59,14 +60,20 @@ class TodoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request)
+    public function update(Request $request, $id)
     {
-        $todo = Todo::find($id);
-        return view('todos.edit', [
-            'todo' => $todo,
+        $request->validate([
+            'updateTodo'     => 'required|max:20',
         ]);
-        return redirect('/todo/update');
 
+        $todo = Todo::find($id);
+
+        $todo->todo     = $request->updateTodo;
+        $todo->deadline = $request->updateDeadline;
+
+        $todo->save();
+
+        return redirect()->route('todos.index');
     }
 
     /**
@@ -75,11 +82,12 @@ class TodoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Request $request)
+    public function destroy($id)
     {
-        $todos = Todo::get();
-        return view('todos.index', [
-            'todos' => $todos,
-        ]);
+        $todo = Todo::find($id);
+
+        $todo->delete();
+
+        return redirect()->route('todos.index');
     }
 }
