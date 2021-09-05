@@ -49,7 +49,9 @@
                         {!! Form::open(['route' => ['todos.update', $todo->id], 'method' => 'POST']) !!}
                         {{ csrf_field() }}
                         {{ method_field('PUT') }}
-                        <td><a href="{{ route('todos.index', $todo->id) }}" class="btn btn-primary">更新</a></td>
+                        <input type="hidden" class="input-update" value="{{ $todo->todo }}" name="todo" />
+                        <td>{{ Form::submit('更新', ['class' => 'btn btn-danger']) }}</td>
+                        {!! Form::close() !!}
                         {!! Form::open(['route' => ['todos.destroy', $todo->id], 'method' => 'POST']) !!}
                         {{ csrf_field() }}
                         {{ method_field('DELETE') }}
