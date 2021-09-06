@@ -49,10 +49,8 @@
                         {!! Form::open(['route' => ['todos.update', $todo->id], 'method' => 'POST']) !!}
                         {{ csrf_field() }}
                         {{ method_field('PUT') }}
-                        <input type="hidden" class="input-update" value="{{ $todo->todo }}" name="todo" />
                         <td>{{ Form::submit('更新', ['class' => 'btn btn-danger']) }}</td>
-                        {!! Form::close() !!}
-                        {!! Form::open(['route' => ['todos.destroy', $todo->id], 'method' => 'POST']) !!}
+                        {!! Form::open(['route' => ['todos.destroy', $todo->id], 'method' => 'POST'])!!}
                         {{ csrf_field() }}
                         {{ method_field('DELETE') }}
                         <td>{{ Form::submit('削除', ['class' => 'btn btn-danger']) }}</td>
