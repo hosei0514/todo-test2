@@ -61,16 +61,15 @@ class TodoController extends Controller
      */
     public function update(Request $request, $id)
     {
-        return $request;
         $request->validate([
             'updateTodo'     => 'required|max:20',
         ]);
 
         $todo = Todo::find($id);
 
-        $todo->todo     = $request->updateTodo;
+        $todo->todo = $request->updateTodo;
 
-        $todo->save();
+        $todo->update();
         return redirect()->route('todos.index');
     }
 
