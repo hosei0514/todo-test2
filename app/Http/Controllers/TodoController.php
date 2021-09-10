@@ -69,7 +69,6 @@ class TodoController extends Controller
 
         $todo->todo = $request->updateTodo;
 
-        $todo->update();
         return redirect()->route('todos.index');
     }
 
