@@ -43,9 +43,9 @@
                 @foreach ($todos as $todo)
                     <tr>
                         <td>
-                        {{Form::open()}}
+                        {!! Form::open() !!}
                         {{ Form::text('updateTodo', $todo->todo, ['class' => 'form-control col-7 mr-4']) }}
-                        {{Form::close()}}
+                        {!! Form::close() !!}
                         </td>
                         <td>{{ $todo->created_at }}</td>
                         {!! Form::open(['route' => ['todos.update', $todo->id], 'method' => 'POST']) !!}
