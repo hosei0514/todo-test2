@@ -59,11 +59,17 @@ class TodoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update($id)
+    public function update(Request $request, $id)
     {
+        $request->validate([
+            'updateTodo'     => 'required|max:20',
+        ]);
 
         $todo = Todo::find($id);
 
+        $todo->todo = $request->updateTodo;
+
+        $todo->save();
         return redirect()->route('todos.index');
     }
 
