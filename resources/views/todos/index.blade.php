@@ -42,13 +42,9 @@
             <tbody>
                 @foreach ($todos as $todo)
                     <tr>
-                        <td>
-                        {!! Form::open() !!}
-                        {{ Form::text('updateTodo', $todo->todo, ['class' => 'form-control col-7 mr-4']) }}
-                        {!! Form::close() !!}
-                        </td>
-                        <td>{{ $todo->created_at }}</td>
                         {!! Form::open(['route' => ['todos.update', $todo->id], 'method' => 'POST']) !!}
+                        <td>{{ Form::text('updateTodo', $todo->todo, ['class' => 'form-control col-7 mr-4']) }}</td>
+                        <td>{{ $todo->created_at }}</td>
                         {{ csrf_field() }}
                         {{ method_field('PUT') }}
                         <td>{{ Form::submit('更新', ['class' => 'btn btn-danger']) }}</td>
