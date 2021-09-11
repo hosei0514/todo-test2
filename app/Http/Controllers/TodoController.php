@@ -64,8 +64,6 @@ class TodoController extends Controller
 
         $todo = Todo::find($id);
 
-        $todo->update();
-
         return redirect()->route('todos.index');
     }
 
